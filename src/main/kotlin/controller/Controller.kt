@@ -8,7 +8,7 @@ import view.View
 interface Controller
 
 internal class ControllerImpl(
-    private val view: View,
+    view: View,
     private val model: Model
 ) : Controller {
 

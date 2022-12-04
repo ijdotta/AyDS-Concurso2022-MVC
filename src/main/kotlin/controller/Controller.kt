@@ -12,18 +12,10 @@ internal class ControllerImpl(
     private val model: Model
 ) : Controller {
 
-    private val observer: Observer<UiEvent> =
-        Observer { value ->
-            when (value) {
-                UiEvent.FetchQuote -> randomQuote()
-            }
-        }
+    // TODO add UiEvent observer and model interaction
 
     init {
-        view.uiEventObservable.subscribe(observer)
+        // TODO suscribe observer
     }
 
-    private fun randomQuote() {
-        model.fetchQuote()
-    }
 }

@@ -15,8 +15,6 @@ class ModelImpl(private val simpsonsService: SimpsonsService) : Model {
     override val simpsonsQuoteObservable = Subject<SimpsonsQuote>()
 
     override fun fetchQuote() {
-        simpsonsService.getQuote()?.let {
-            simpsonsQuoteObservable.notify(it)
-        }
+        TODO("get quote and notify about model change")
     }
 }

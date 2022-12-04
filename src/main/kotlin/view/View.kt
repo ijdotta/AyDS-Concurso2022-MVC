@@ -31,8 +31,12 @@ class ViewImpl(private val uiComponents: UiComponents) : View {
         }
     }
 
+    private fun notifyFetchQuoteAction() {
+        TODO()
+    }
+
     private fun initObservers() {
-        model.simpsonsQuoteObservable.subscribe { quote -> updateQuote(quote)}
+        TODO("Observe model changes")
     }
 
     private fun updateQuote(quote: SimpsonsQuote) {
@@ -49,9 +53,5 @@ class ViewImpl(private val uiComponents: UiComponents) : View {
             quoteTextArea.text = uiState.quote
             quoteCharacterField.text = uiState.character
         }
-    }
-
-    private fun notifyFetchQuoteAction() {
-        onActionSubject.notify(UiEvent.FetchQuote)
     }
 }

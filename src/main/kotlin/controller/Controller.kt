@@ -15,8 +15,7 @@ internal class ControllerImpl(
     private val observer: Observer<UiEvent> =
         Observer { value ->
             when (value) {
-                UiEvent.AddItem -> addItem()
-                UiEvent.CheckItem -> checkItem()
+                UiEvent.FetchQuote -> randomQuote()
             }
         }
 
@@ -24,12 +23,7 @@ internal class ControllerImpl(
         view.uiEventObservable.subscribe(observer)
     }
 
-    private fun addItem() {
-        model.addItem(view.uiState.newItemDescription)
+    private fun randomQuote() {
+        model.fetchQuote()
     }
-
-    private fun checkItem() {
-        TODO("Not yet implemented")
-    }
-
 }

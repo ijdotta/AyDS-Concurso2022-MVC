@@ -5,17 +5,20 @@ import java.awt.Dimension
 import javax.swing.*
 
 interface UiComponents {
-    val itemDescriptionField : JTextField
-    val addItemButton: JButton
+    val fetchQuoteButton: JButton
+    val quoteTextArea: JTextArea
+    val quoteCharacterField: JTextField
 
     fun openWindow()
 }
 
-private const val ADD = "+"
+private const val FETCH_QUOTE = "Quote!"
 internal class UiComponentsImpl : UiComponents {
 
-    override lateinit var itemDescriptionField: JTextField
-    override lateinit var addItemButton: JButton
+    override lateinit var fetchQuoteButton: JButton
+    override lateinit var quoteCharacterField: JTextField
+    override lateinit var quoteTextArea: JTextArea
+
     private lateinit var contentPanel : JPanel
 
     init {
@@ -26,7 +29,7 @@ internal class UiComponentsImpl : UiComponents {
     override fun openWindow() {
         val frame = JFrame()
         frame.contentPane = contentPanel
-        frame.minimumSize = Dimension(600, 800)
+        frame.minimumSize = Dimension(300, 300)
         frame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         frame.pack()
         frame.isVisible = true
@@ -34,8 +37,9 @@ internal class UiComponentsImpl : UiComponents {
 
     private fun buildUI() {
         addContentPanel()
-        addItemDescriptionPanel()
-        addAddItemButtonPanel()
+        addFetchQuotePanel()
+        addQuoteTextPanel()
+        addQuoteCharacterPanel()
     }
 
     private fun addContentPanel() {
@@ -43,22 +47,34 @@ internal class UiComponentsImpl : UiComponents {
         contentPanel.layout = BoxLayout(contentPanel, BoxLayout.PAGE_AXIS)
     }
 
-    private fun addItemDescriptionPanel() {
-        val searchTermPanel = JPanel()
-        searchTermPanel.layout = BorderLayout()
-        searchTermPanel.maximumSize = Dimension(400, 50)
-        itemDescriptionField = JFormattedTextField()
-        searchTermPanel.add(itemDescriptionField)
-        contentPanel.add(searchTermPanel)
+    private fun addFetchQuotePanel() {
+        val fetchQuotePanel = JPanel()
+        fetchQuotePanel.layout = BorderLayout()
+        fetchQuotePanel.maximumSize = Dimension(400, 50)
+        fetchQuoteButton = JButton(FETCH_QUOTE)
+        fetchQuotePanel.add(fetchQuoteButton)
+        contentPanel.add(fetchQuotePanel)
     }
 
-    private fun addAddItemButtonPanel() {
-        val searchButtonPanel = JPanel()
-        searchButtonPanel.layout = BorderLayout()
-        searchButtonPanel.maximumSize = Dimension(400, 50)
-        addItemButton = JButton(ADD)
-        searchButtonPanel.add(addItemButton)
-        contentPanel.add(searchButtonPanel)
+    private fun addQuoteTextPanel() {
+        val quoteTextPanel = JPanel()
+        quoteTextPanel.layout = BorderLayout()
+        quoteTextPanel.maximumSize = Dimension(400, 300)
+        quoteTextArea = JTextArea()
+        quoteTextArea.lineWrap = true
+        quoteTextArea.wrapStyleWord = true
+        quoteTextArea.autoscrolls = true
+        quoteTextPanel.add(quoteTextArea)
+        contentPanel.add(quoteTextPanel)
+    }
+
+    private fun addQuoteCharacterPanel() {
+        val quoteCharacterPanel = JPanel()
+        quoteCharacterPanel.layout = BorderLayout()
+        quoteCharacterPanel.maximumSize = Dimension(400, 50)
+        quoteCharacterField = JTextField()
+        quoteCharacterPanel.add(quoteCharacterField)
+        contentPanel.add(quoteCharacterPanel)
     }
 
     private fun setStyle() {

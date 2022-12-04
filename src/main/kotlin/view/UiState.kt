@@ -1,5 +1,6 @@
 package view
 
 data class UiState(
-    val newItemDescription: String = ""
+    val quote: String = "",
+    val character: String = ""
 )

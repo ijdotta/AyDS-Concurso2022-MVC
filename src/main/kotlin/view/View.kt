@@ -3,7 +3,7 @@ package view
 import common.observer.Observable
 import common.observer.Subject
 import model.ModelInjector.model
-import model.entities.ListItem
+import model.entities.SimpsonsQuote
 
 interface View {
     val uiEventObservable : Observable<UiEvent>
@@ -27,32 +27,31 @@ class ViewImpl(private val uiComponents: UiComponents) : View {
 
     private fun initListeners() {
         with(uiComponents) {
-            addItemButton.addActionListener { addItemAction() }
+            fetchQuoteButton.addActionListener { notifyFetchQuoteAction() }
         }
     }
 
     private fun initObservers() {
-        model.itemObservable.subscribe { value -> updateItemsList(value) }
+        model.simpsonsQuoteObservable.subscribe { quote -> updateQuote(quote)}
     }
 
-    private fun updateItemsList(item: ListItem) {
-
+    private fun updateQuote(quote: SimpsonsQuote) {
+        updateUiState(quote)
+        updateUiComponents(quote)
     }
 
-    private fun addItemAction() {
-        updateItemDescriptionState()
-        notifyAddItemAction()
+    private fun updateUiState(quote: SimpsonsQuote) {
+        uiState = uiState.copy(quote = quote.quote, character = quote.character)
     }
 
-    private fun updateItemDescriptionState() {
-        uiComponents.itemDescriptionField.let {
-            uiState = uiState.copy(newItemDescription = it.text)
-            it.text = ""
+    private fun updateUiComponents(quote: SimpsonsQuote) {
+        with(uiComponents) {
+            quoteTextArea.text = uiState.quote
+            quoteCharacterField.text = uiState.character
         }
-
     }
 
-    private fun notifyAddItemAction() {
-        onActionSubject.notify(UiEvent.AddItem)
+    private fun notifyFetchQuoteAction() {
+        onActionSubject.notify(UiEvent.FetchQuote)
     }
 }
